@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button id="get">Get Post</button>
+    <button id="post">Create a Post</button>
+    
+</body>
+<script>
+        const getButton = document.getElementById("get");
+        const postButton = document.getElementById("post");
+
+        getButton.addEventListener("click", () => {
+            fetch("http://localhost:8080/feed/posts")
+                .then((res) => res.json())
+                .then((resdata) => console.log(resdata))
+                .catch((err) => console.log("Error:", err));
+        });
+
+        postButton.addEventListener("click", () => {
+            fetch("http://localhost:8080/feed/post",{
+                method:'POST',
+
+                //oure data is text plane so use /json . stringyfy
+              //go network tab and check payload
+                body:JSON.stringify({
+                    title:'a content post',
+                    content:'created view codepen'
+                }),
+
+                //but text type is plamnetext so crate heder and define
+                headers:{
+                    'Content-Type':'application/json'
+                }
+                //now check console titrle there
+            })
+                .then((res) => res.json())
+                .then((resdata) => console.log(resdata))
+                .catch((err) => console.log("Error:", err));
+        });
+
+    </script>
+</html>
